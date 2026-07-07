@@ -4,6 +4,117 @@
 </app-page-header>
 
 
+<!-- Formulaire ajout employé -->
+
+<div class="form-container">
+
+  <h3>
+    Ajouter un employé
+  </h3>
+
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>
+      Matricule
+    </mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="nouvelEmploye.matricule">
+
+  </mat-form-field>
+
+
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>
+      Nom
+    </mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="nouvelEmploye.nom">
+
+  </mat-form-field>
+
+
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>
+      Prénom
+    </mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="nouvelEmploye.prenom">
+
+  </mat-form-field>
+
+
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>
+      Poste
+    </mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="nouvelEmploye.poste">
+
+  </mat-form-field>
+
+
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>
+      Salaire
+    </mat-label>
+
+    <input
+      matInput
+      type="number"
+      [(ngModel)]="nouvelEmploye.salaire">
+
+  </mat-form-field>
+
+
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>
+      Email
+    </mat-label>
+
+    <input
+      matInput
+      type="email"
+      [(ngModel)]="nouvelEmploye.email">
+
+  </mat-form-field>
+
+
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="ajouterEmploye()">
+
+    Ajouter
+
+  </button>
+
+
+</div>
+
+
+
+<!-- Tableau des employés -->
+
 <table mat-table [dataSource]="employes">
 
 
@@ -28,7 +139,7 @@
     </th>
 
     <td mat-cell *matCellDef="let employe">
-      {{ employe.nom }}
+      {{ employe.nom }} {{ employe.prenom }}
     </td>
 
   </ng-container>
@@ -62,9 +173,17 @@
   </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr
+    mat-header-row
+    *matHeaderRowDef="displayedColumns">
+  </tr>
+
+
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns;">
+  </tr>
 
 
 </table>
