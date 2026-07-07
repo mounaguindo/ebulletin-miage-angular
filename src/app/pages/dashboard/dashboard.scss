@@ -1,0 +1,43 @@
+.stats-container {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 24px;
+
+}
+
+
+mat-card {
+
+  padding: 16px;
+
+}
+
+
+mat-card-header {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+}
+
+
+mat-icon {
+
+  font-size: 32px;
+
+}
+
+
+h2 {
+
+  font-size: 2rem;
+
+  margin: 16px 0;
+
+}

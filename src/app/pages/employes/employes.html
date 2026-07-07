@@ -1,0 +1,70 @@
+<app-page-header
+  title="Employés"
+  subtitle="Gestion des employés">
+</app-page-header>
+
+
+<table mat-table [dataSource]="employes">
+
+
+  <ng-container matColumnDef="matricule">
+
+    <th mat-header-cell *matHeaderCellDef>
+      Matricule
+    </th>
+
+    <td mat-cell *matCellDef="let employe">
+      {{ employe.matricule }}
+    </td>
+
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="nom">
+
+    <th mat-header-cell *matHeaderCellDef>
+      Nom
+    </th>
+
+    <td mat-cell *matCellDef="let employe">
+      {{ employe.nom }}
+    </td>
+
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="poste">
+
+    <th mat-header-cell *matHeaderCellDef>
+      Poste
+    </th>
+
+    <td mat-cell *matCellDef="let employe">
+      {{ employe.poste }}
+    </td>
+
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="salaire">
+
+    <th mat-header-cell *matHeaderCellDef>
+      Salaire
+    </th>
+
+    <td mat-cell *matCellDef="let employe">
+      {{ employe.salaire }} FCFA
+    </td>
+
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+</table>

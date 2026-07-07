@@ -1,0 +1,36 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 240px;
+  padding-top: 16px;
+  background-color: var(--mat-sys-surface-container);
+}
+
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+mat-toolbar {
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.content {
+  padding: 24px;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}

@@ -1,0 +1,91 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <!-- Menu latéral -->
+  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+
+    <!-- Logo -->
+    <div class="sidenav-header">
+      <mat-icon>account_balance</mat-icon>
+      <span>eBulletin</span>
+    </div>
+
+    <!-- Menu -->
+    <mat-nav-list>
+
+      @for (item of menuItems; track item.route) {
+
+        <a
+          mat-list-item
+          [routerLink]="item.route"
+          routerLinkActive="active-link">
+
+          <mat-icon matListItemIcon>
+            {{ item.icon }}
+          </mat-icon>
+
+          <span matListItemTitle>
+            {{ item.label }}
+          </span>
+
+        </a>
+
+      }
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <!-- Contenu principal -->
+  <mat-sidenav-content>
+
+    <!-- Barre supérieure -->
+    <mat-toolbar>
+
+      <!-- Bouton burger -->
+      <button
+        mat-icon-button
+        (click)="toggleMenu()"
+        aria-label="Ouvrir ou fermer le menu">
+
+        <mat-icon>menu</mat-icon>
+
+      </button>
+
+      <!-- Titre -->
+      <span>{{ appTitle }}</span>
+
+      <span class="toolbar-spacer"></span>
+
+      <!-- Notifications -->
+      <button
+        mat-icon-button
+        [matBadge]="notifications"
+        matBadgeColor="warn"
+        matBadgeSize="small"
+        aria-label="Notifications">
+
+        <mat-icon>notifications</mat-icon>
+
+      </button>
+
+      <!-- Profil utilisateur -->
+      <button
+        mat-icon-button
+        aria-label="Profil utilisateur">
+
+        <mat-icon>account_circle</mat-icon>
+
+      </button>
+
+    </mat-toolbar>
+
+    <!-- Contenu des pages -->
+    <div class="content">
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
