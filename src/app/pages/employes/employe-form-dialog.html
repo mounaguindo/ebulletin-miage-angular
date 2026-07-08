@@ -1,0 +1,129 @@
+<h2 mat-dialog-title>
+  {{ isEdit ? 'Modifier un employé' : 'Ajouter un employé' }}
+</h2>
+
+
+<form [formGroup]="form">
+
+
+<mat-dialog-content>
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Matricule</mat-label>
+
+<input matInput formControlName="matricule">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Nom</mat-label>
+
+<input matInput formControlName="nom">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Prénom</mat-label>
+
+<input matInput formControlName="prenom">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Email</mat-label>
+
+<input matInput formControlName="email">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Poste</mat-label>
+
+<input matInput formControlName="poste">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Département</mat-label>
+
+<input matInput formControlName="departement">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Salaire brut</mat-label>
+
+<input 
+matInput 
+type="number"
+formControlName="salaireBrut">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Date d'embauche</mat-label>
+
+<input 
+matInput 
+type="date"
+formControlName="dateEmbauche">
+
+</mat-form-field>
+
+
+</mat-dialog-content>
+
+
+
+<mat-dialog-actions>
+
+
+<button 
+mat-button
+type="button"
+(click)="dialogRef.close()">
+
+Annuler
+
+</button>
+
+
+
+<button 
+mat-raised-button
+color="primary"
+type="button"
+(click)="submit()">
+
+{{isEdit ? 'Modifier':'Ajouter'}}
+
+</button>
+
+
+</mat-dialog-actions>
+
+
+</form>

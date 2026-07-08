@@ -4,186 +4,293 @@
 </app-page-header>
 
 
-<!-- Formulaire ajout employé -->
 
-<div class="form-container">
-
-  <h3>
-    Ajouter un employé
-  </h3>
+<div class="actions-container">
 
 
-  <mat-form-field appearance="outline">
+<button
+mat-raised-button
+color="primary"
+(click)="ouvrirFormulaire()">
 
-    <mat-label>
-      Matricule
-    </mat-label>
+Ajouter un employé
 
-    <input
-      matInput
-      [(ngModel)]="nouvelEmploye.matricule">
-
-  </mat-form-field>
-
-
-
-  <mat-form-field appearance="outline">
-
-    <mat-label>
-      Nom
-    </mat-label>
-
-    <input
-      matInput
-      [(ngModel)]="nouvelEmploye.nom">
-
-  </mat-form-field>
-
-
-
-  <mat-form-field appearance="outline">
-
-    <mat-label>
-      Prénom
-    </mat-label>
-
-    <input
-      matInput
-      [(ngModel)]="nouvelEmploye.prenom">
-
-  </mat-form-field>
-
-
-
-  <mat-form-field appearance="outline">
-
-    <mat-label>
-      Poste
-    </mat-label>
-
-    <input
-      matInput
-      [(ngModel)]="nouvelEmploye.poste">
-
-  </mat-form-field>
-
-
-
-  <mat-form-field appearance="outline">
-
-    <mat-label>
-      Salaire
-    </mat-label>
-
-    <input
-      matInput
-      type="number"
-      [(ngModel)]="nouvelEmploye.salaire">
-
-  </mat-form-field>
-
-
-
-  <mat-form-field appearance="outline">
-
-    <mat-label>
-      Email
-    </mat-label>
-
-    <input
-      matInput
-      type="email"
-      [(ngModel)]="nouvelEmploye.email">
-
-  </mat-form-field>
-
-
-
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="ajouterEmploye()">
-
-    Ajouter
-
-  </button>
+</button>
 
 
 </div>
 
 
 
-<!-- Tableau des employés -->
-
-<table mat-table [dataSource]="employes">
-
-
-  <ng-container matColumnDef="matricule">
-
-    <th mat-header-cell *matHeaderCellDef>
-      Matricule
-    </th>
-
-    <td mat-cell *matCellDef="let employe">
-      {{ employe.matricule }}
-    </td>
-
-  </ng-container>
+<br><br>
 
 
 
-  <ng-container matColumnDef="nom">
 
-    <th mat-header-cell *matHeaderCellDef>
-      Nom
-    </th>
-
-    <td mat-cell *matCellDef="let employe">
-      {{ employe.nom }} {{ employe.prenom }}
-    </td>
-
-  </ng-container>
+<table
+mat-table
+[dataSource]="employes"
+class="mat-elevation-z8">
 
 
 
-  <ng-container matColumnDef="poste">
-
-    <th mat-header-cell *matHeaderCellDef>
-      Poste
-    </th>
-
-    <td mat-cell *matCellDef="let employe">
-      {{ employe.poste }}
-    </td>
-
-  </ng-container>
 
 
+<!-- Matricule -->
 
-  <ng-container matColumnDef="salaire">
-
-    <th mat-header-cell *matHeaderCellDef>
-      Salaire
-    </th>
-
-    <td mat-cell *matCellDef="let employe">
-      {{ employe.salaire }} FCFA
-    </td>
-
-  </ng-container>
+<ng-container matColumnDef="matricule">
 
 
+<th mat-header-cell *matHeaderCellDef>
 
-  <tr
-    mat-header-row
-    *matHeaderRowDef="displayedColumns">
-  </tr>
+Matricule
+
+</th>
 
 
-  <tr
-    mat-row
-    *matRowDef="let row; columns: displayedColumns;">
-  </tr>
+<td mat-cell *matCellDef="let employe">
+
+
+{{employe.matricule}}
+
+
+</td>
+
+
+</ng-container>
+
+
+
+
+
+
+
+<!-- Nom -->
+
+<ng-container matColumnDef="nom">
+
+
+<th mat-header-cell *matHeaderCellDef>
+
+Nom complet
+
+</th>
+
+
+<td mat-cell *matCellDef="let employe">
+
+
+{{employe.nom}} {{employe.prenom}}
+
+
+</td>
+
+
+</ng-container>
+
+
+
+
+
+
+
+<!-- Poste -->
+
+<ng-container matColumnDef="poste">
+
+
+<th mat-header-cell *matHeaderCellDef>
+
+Poste
+
+</th>
+
+
+<td mat-cell *matCellDef="let employe">
+
+
+{{employe.poste}}
+
+
+</td>
+
+
+</ng-container>
+
+
+
+
+
+
+
+<!-- Département -->
+
+<ng-container matColumnDef="departement">
+
+
+<th mat-header-cell *matHeaderCellDef>
+
+Département
+
+</th>
+
+
+<td mat-cell *matCellDef="let employe">
+
+
+{{employe.departement}}
+
+
+</td>
+
+
+</ng-container>
+
+
+
+
+
+
+
+<!-- Salaire -->
+
+<ng-container matColumnDef="salaireBrut">
+
+
+<th mat-header-cell *matHeaderCellDef>
+
+Salaire
+
+</th>
+
+
+<td mat-cell *matCellDef="let employe">
+
+
+{{employe.salaireBrut}} FCFA
+
+
+</td>
+
+
+</ng-container>
+
+
+
+
+
+
+
+<!-- Actif -->
+
+<ng-container matColumnDef="actif">
+
+
+<th mat-header-cell *matHeaderCellDef>
+
+Actif
+
+</th>
+
+
+<td mat-cell *matCellDef="let employe">
+
+
+{{employe.actif ? 'Oui':'Non'}}
+
+
+</td>
+
+
+</ng-container>
+
+
+
+
+
+
+
+
+<!-- Actions -->
+
+<ng-container matColumnDef="actions">
+
+
+<th mat-header-cell *matHeaderCellDef>
+
+Actions
+
+</th>
+
+
+<td mat-cell *matCellDef="let employe">
+
+
+
+<button
+
+mat-button
+
+color="primary"
+
+(click)="modifier(employe)">
+
+Modifier
+
+</button>
+
+
+
+
+<button
+
+mat-button
+
+color="warn"
+
+(click)="supprimer(employe.id)">
+
+Supprimer
+
+</button>
+
+
+
+</td>
+
+
+</ng-container>
+
+
+
+
+
+
+
+
+
+<tr
+
+mat-header-row
+
+*matHeaderRowDef="displayedColumns">
+
+</tr>
+
+
+
+
+
+<tr
+
+mat-row
+
+*matRowDef="let row; columns: displayedColumns;">
+
+</tr>
+
+
+
 
 
 </table>

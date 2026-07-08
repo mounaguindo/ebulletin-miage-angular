@@ -1,117 +1,273 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { PageHeader } from '../../shared/page-header/page-header';
+import { CommonModule } from '@angular/common';
 
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-
-import { FormsModule } from '@angular/forms';
-
-import { EmployeService } from '../../services/employe';
 import { Employe } from '../../models/employe';
+
+import { EmployeService } 
+from '../../services/employe';
+
+
+import { MatButtonModule }
+from '@angular/material/button';
+
+
+import { MatTableModule }
+from '@angular/material/table';
+
+
+import { MatDialog, MatDialogModule }
+from '@angular/material/dialog';
+
+
+import { EmployeFormDialog }
+from './employe-form-dialog';
+
+
+// Vérifie ce chemin selon ton projet
+import { PageHeaderComponent }
+from '../../shared/page-header/page-header.component';
+
 
 
 @Component({
-  selector: 'app-employes',
-  standalone: true,
-  imports: [
-    PageHeader,
 
-    MatTableModule,
+  selector:'app-employes',
+
+  standalone:true,
+
+
+  imports:[
+
+    CommonModule,
+
     MatButtonModule,
 
-    MatFormFieldModule,
-    MatInputModule,
+    MatTableModule,
 
-    FormsModule
+    MatDialogModule,
+
+    PageHeaderComponent
+
   ],
-  templateUrl: './employes.html',
-  styleUrl: './employes.scss'
+
+
+  templateUrl:'./employes.html'
+
 })
-export class Employes implements OnInit {
 
 
-  displayedColumns = [
-    'matricule',
-    'nom',
-    'poste',
-    'salaire'
-  ];
+export class Employes {
+
+
+
+  private service = inject(EmployeService);
+
+
+  private dialog = inject(MatDialog);
+
+
 
 
   employes: Employe[] = [];
 
 
-  nouvelEmploye: Employe = {
-
-    id: 0,
-    matricule: '',
-    nom: '',
-    prenom: '',
-    poste: '',
-    salaire: 0,
-    email: ''
-
-  };
 
 
-  constructor(
-    private employeService: EmployeService
-  ) {}
+
+  displayedColumns = [
 
 
-  ngOnInit(): void {
+    'matricule',
+
+    'nom',
+
+    'poste',
+
+    'departement',
+
+    'salaireBrut',
+
+    'actif',
+
+    'actions'
+
+
+  ];
+
+
+
+
+
+
+
+  ngOnInit(){
+
 
     this.chargerEmployes();
 
-  }
-
-
-
-  chargerEmployes(): void {
-
-    this.employes =
-      this.employeService.getEmployes();
 
   }
 
 
 
-  ajouterEmploye(): void {
-
-
-    this.nouvelEmploye.id =
-      this.employes.length + 1;
 
 
 
-    this.employeService.addEmploye(
-      this.nouvelEmploye
+
+
+  chargerEmployes(){
+
+
+    this.employes = this.service.getEmployes();
+
+
+  }
+
+
+
+
+
+
+
+
+
+  ouvrirFormulaire(){
+
+
+
+    const dialogRef = this.dialog.open(
+
+
+      EmployeFormDialog,
+
+
+      {
+
+
+        width:'600px',
+
+        data:null
+
+
+      }
+
+
     );
 
 
 
+
+
+
+    dialogRef.afterClosed()
+
+    .subscribe(result=>{
+
+
+
+      if(result){
+
+
+        this.chargerEmployes();
+
+
+      }
+
+
+
+    });
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  modifier(employe:Employe){
+
+
+
+    const dialogRef = this.dialog.open(
+
+
+      EmployeFormDialog,
+
+
+      {
+
+
+        width:'600px',
+
+
+        data:employe
+
+
+
+      }
+
+
+
+    );
+
+
+
+
+
+
+
+    dialogRef.afterClosed()
+
+    .subscribe(result=>{
+
+
+
+      if(result){
+
+
+        this.chargerEmployes();
+
+
+      }
+
+
+
+    });
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  supprimer(id:number){
+
+
+
+    this.service.deleteEmploye(id);
+
+
+
     this.chargerEmployes();
 
 
 
-    this.nouvelEmploye = {
-
-      id: 0,
-      matricule: '',
-      nom: '',
-      prenom: '',
-      poste: '',
-      salaire: 0,
-      email: ''
-
-    };
-
-
   }
+
+
+
 
 
 }

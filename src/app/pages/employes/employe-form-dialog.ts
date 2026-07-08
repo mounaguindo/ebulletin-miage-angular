@@ -1,0 +1,294 @@
+import { Component, Inject, inject } from '@angular/core';
+
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators,
+  FormGroup
+} from '@angular/forms';
+
+
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogModule
+} from '@angular/material/dialog';
+
+
+import { MatFormFieldModule }
+from '@angular/material/form-field';
+
+
+import { MatInputModule }
+from '@angular/material/input';
+
+
+import { MatButtonModule }
+from '@angular/material/button';
+
+
+import { MatSnackBar }
+from '@angular/material/snack-bar';
+
+
+import { EmployeService }
+from '../../services/employe';
+
+
+import { Employe }
+from '../../models/employe';
+
+
+
+@Component({
+
+  selector:'app-employe-form-dialog',
+
+  standalone:true,
+
+  imports:[
+
+    ReactiveFormsModule,
+
+    MatDialogModule,
+
+    MatFormFieldModule,
+
+    MatInputModule,
+
+    MatButtonModule
+
+  ],
+
+  templateUrl:'./employe-form-dialog.html'
+
+})
+
+
+export class EmployeFormDialog {
+
+
+  private fb = inject(FormBuilder);
+
+
+  private service = inject(EmployeService);
+
+
+  private snack = inject(MatSnackBar);
+
+
+  public dialogRef = inject(MatDialogRef<EmployeFormDialog>);
+
+
+
+  form!: FormGroup;
+
+
+  public isEdit = false;
+
+
+
+  constructor(
+
+    @Inject(MAT_DIALOG_DATA)
+
+    public data: Employe | null
+
+
+  ){
+
+
+    this.isEdit = !!data;
+
+
+
+    this.form = this.fb.group({
+
+
+      matricule:[
+
+        data?.matricule ?? '',
+
+        [
+
+          Validators.required,
+
+          Validators.minLength(3)
+
+        ]
+
+      ],
+
+
+      nom:[
+
+        data?.nom ?? '',
+
+        Validators.required
+
+      ],
+
+
+      prenom:[
+
+        data?.prenom ?? '',
+
+        Validators.required
+
+      ],
+
+
+      email:[
+
+        data?.email ?? '',
+
+        [
+
+          Validators.required,
+
+          Validators.email
+
+        ]
+
+      ],
+
+
+      poste:[
+
+        data?.poste ?? '',
+
+        Validators.required
+
+      ],
+
+
+      departement:[
+
+        data?.departement ?? '',
+
+        Validators.required
+
+      ],
+
+
+      salaireBrut:[
+
+        data?.salaireBrut ?? 0,
+
+        [
+
+          Validators.required,
+
+          Validators.min(1)
+
+        ]
+
+      ],
+
+
+      dateEmbauche:[
+
+        data?.dateEmbauche ?? '',
+
+        Validators.required
+
+      ],
+
+
+      actif:[
+
+        data?.actif ?? true
+
+      ]
+
+
+    });
+
+
+  }
+
+
+
+  submit(){
+
+
+    if(this.form.invalid){
+
+      return;
+
+    }
+
+
+
+    const employe: Employe = {
+
+
+      ...this.form.value,
+
+
+      id:this.data?.id ?? Date.now()
+
+
+    };
+
+
+
+
+    if(this.isEdit){
+
+
+      this.service.updateEmploye(employe);
+
+
+
+      this.snack.open(
+
+        'Employé modifié',
+
+        'OK',
+
+        {
+
+          duration:2000
+
+        }
+
+      );
+
+
+    }
+
+    else{
+
+
+      this.service.addEmploye(employe);
+
+
+
+      this.snack.open(
+
+        'Employé ajouté',
+
+        'OK',
+
+        {
+
+          duration:2000
+
+        }
+
+      );
+
+
+    }
+
+
+
+    this.dialogRef.close(true);
+
+
+  }
+
+
+
+}

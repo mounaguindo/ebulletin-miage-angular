@@ -8,29 +8,12 @@ import { Employe } from '../models/employe';
 export class EmployeService {
 
 
-  private employes: Employe[] = [
+  private employes: Employe[] = [];
 
-    {
-      id: 1,
-      matricule: 'EMP001',
-      nom: 'Traoré',
-      prenom: 'Moussa',
-      poste: 'Développeur',
-      salaire: 350000,
-      email: 'moussa@example.com'
-    },
 
-    {
-      id: 2,
-      matricule: 'EMP002',
-      nom: 'Diarra',
-      prenom: 'Awa',
-      poste: 'Comptable',
-      salaire: 300000,
-      email: 'awa@example.com'
-    }
 
-  ];
+  constructor(){}
+
 
 
   getEmployes(): Employe[] {
@@ -40,6 +23,8 @@ export class EmployeService {
   }
 
 
+
+
   addEmploye(employe: Employe): void {
 
     this.employes.push(employe);
@@ -47,12 +32,44 @@ export class EmployeService {
   }
 
 
-  deleteEmploye(id: number): void {
 
-    this.employes = this.employes.filter(
-      employe => employe.id !== id
+
+
+  updateEmploye(employe: Employe): void {
+
+
+    const index = this.employes.findIndex(
+
+      e => e.id === employe.id
+
     );
 
+
+    if(index !== -1){
+
+      this.employes[index] = employe;
+
+    }
+
+
   }
+
+
+
+
+
+  deleteEmploye(id:number): void {
+
+
+    this.employes = this.employes.filter(
+
+      e => e.id !== id
+
+    );
+
+
+  }
+
+
 
 }
