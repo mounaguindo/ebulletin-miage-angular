@@ -4,33 +4,61 @@
 </app-page-header>
 
 
-
 <div class="actions-container">
 
 
-<button
-mat-raised-button
-color="primary"
-(click)="ouvrirFormulaire()">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="ouvrirFormulaire()">
 
-Ajouter un employé
+    Ajouter un employé
 
-</button>
+  </button>
+
+
+
+  <mat-form-field
+    appearance="outline"
+    class="search-field">
+
+
+    <mat-label>
+      Rechercher un employé
+    </mat-label>
+
+
+    <input
+
+      matInput
+
+      [(ngModel)]="recherche"
+
+      (keyup)="rechercher()"
+
+      placeholder="Nom, matricule, poste...">
+
+
+  </mat-form-field>
 
 
 </div>
 
 
 
-<br><br>
-
+<br>
 
 
 
 <table
-mat-table
-[dataSource]="employes"
-class="mat-elevation-z8">
+
+  mat-table
+
+  [dataSource]="dataSource"
+
+  matSort
+
+  class="mat-elevation-z8">
 
 
 
@@ -41,17 +69,30 @@ class="mat-elevation-z8">
 <ng-container matColumnDef="matricule">
 
 
-<th mat-header-cell *matHeaderCellDef>
+<th
+
+mat-header-cell
+
+*matHeaderCellDef
+
+mat-sort-header>
+
 
 Matricule
+
 
 </th>
 
 
-<td mat-cell *matCellDef="let employe">
+
+<td
+
+mat-cell
+
+*matCellDef="let employe">
 
 
-{{employe.matricule}}
+{{ employe.matricule }}
 
 
 </td>
@@ -70,23 +111,37 @@ Matricule
 <ng-container matColumnDef="nom">
 
 
-<th mat-header-cell *matHeaderCellDef>
+<th
+
+mat-header-cell
+
+*matHeaderCellDef
+
+mat-sort-header>
+
 
 Nom complet
+
 
 </th>
 
 
-<td mat-cell *matCellDef="let employe">
+
+<td
+
+mat-cell
+
+*matCellDef="let employe">
 
 
-{{employe.nom}} {{employe.prenom}}
+{{ employe.nom }} {{ employe.prenom }}
 
 
 </td>
 
 
 </ng-container>
+
 
 
 
@@ -99,23 +154,37 @@ Nom complet
 <ng-container matColumnDef="poste">
 
 
-<th mat-header-cell *matHeaderCellDef>
+<th
+
+mat-header-cell
+
+*matHeaderCellDef
+
+mat-sort-header>
+
 
 Poste
+
 
 </th>
 
 
-<td mat-cell *matCellDef="let employe">
+
+<td
+
+mat-cell
+
+*matCellDef="let employe">
 
 
-{{employe.poste}}
+{{ employe.poste }}
 
 
 </td>
 
 
 </ng-container>
+
 
 
 
@@ -128,23 +197,37 @@ Poste
 <ng-container matColumnDef="departement">
 
 
-<th mat-header-cell *matHeaderCellDef>
+<th
+
+mat-header-cell
+
+*matHeaderCellDef
+
+mat-sort-header>
+
 
 Département
+
 
 </th>
 
 
-<td mat-cell *matCellDef="let employe">
+
+<td
+
+mat-cell
+
+*matCellDef="let employe">
 
 
-{{employe.departement}}
+{{ employe.departement }}
 
 
 </td>
 
 
 </ng-container>
+
 
 
 
@@ -157,23 +240,37 @@ Département
 <ng-container matColumnDef="salaireBrut">
 
 
-<th mat-header-cell *matHeaderCellDef>
+<th
+
+mat-header-cell
+
+*matHeaderCellDef
+
+mat-sort-header>
+
 
 Salaire
+
 
 </th>
 
 
-<td mat-cell *matCellDef="let employe">
+
+<td
+
+mat-cell
+
+*matCellDef="let employe">
 
 
-{{employe.salaireBrut}} FCFA
+{{ employe.salaireBrut | number }} FCFA
 
 
 </td>
 
 
 </ng-container>
+
 
 
 
@@ -186,23 +283,45 @@ Salaire
 <ng-container matColumnDef="actif">
 
 
-<th mat-header-cell *matHeaderCellDef>
+<th
+
+mat-header-cell
+
+*matHeaderCellDef>
+
 
 Actif
+
 
 </th>
 
 
-<td mat-cell *matCellDef="let employe">
+
+<td
+
+mat-cell
+
+*matCellDef="let employe">
 
 
-{{employe.actif ? 'Oui':'Non'}}
+<span
+
+[class.actif]="employe.actif"
+
+[class.inactif]="!employe.actif">
+
+
+{{ employe.actif ? '● Actif' : '● Inactif' }}
+
+
+</span>
 
 
 </td>
 
 
 </ng-container>
+
 
 
 
@@ -216,41 +335,73 @@ Actif
 <ng-container matColumnDef="actions">
 
 
-<th mat-header-cell *matHeaderCellDef>
+<th
+
+mat-header-cell
+
+*matHeaderCellDef>
+
 
 Actions
+
 
 </th>
 
 
-<td mat-cell *matCellDef="let employe">
+
+<td
+
+mat-cell
+
+*matCellDef="let employe">
 
 
 
 <button
 
-mat-button
+mat-icon-button
 
 color="primary"
 
+matTooltip="Modifier"
+
 (click)="modifier(employe)">
 
-Modifier
+
+
+<mat-icon>
+
+edit
+
+</mat-icon>
+
+
 
 </button>
 
 
 
 
+
 <button
 
-mat-button
+mat-icon-button
 
 color="warn"
 
+matTooltip="Supprimer"
+
 (click)="supprimer(employe.id)">
 
-Supprimer
+
+
+<mat-icon>
+
+delete
+
+</mat-icon>
+
+
 
 </button>
 
@@ -292,5 +443,52 @@ mat-row
 
 
 
-
 </table>
+
+
+
+
+
+
+<!-- Aucun résultat -->
+
+<div
+
+class="empty-state"
+
+*ngIf="dataSource.data.length === 0">
+
+
+<mat-icon>
+
+people
+
+</mat-icon>
+
+
+
+<p>
+
+Aucun employé trouvé.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<mat-paginator
+
+[pageSize]="5"
+
+[pageSizeOptions]="[5,10,20]"
+
+showFirstLastButtons>
+
+</mat-paginator>

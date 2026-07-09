@@ -2,128 +2,177 @@
   {{ isEdit ? 'Modifier un employé' : 'Ajouter un employé' }}
 </h2>
 
-
 <form [formGroup]="form">
 
+  <mat-dialog-content>
 
-<mat-dialog-content>
+    <!-- Matricule -->
+    <mat-form-field appearance="outline">
 
+      <mat-label>Matricule</mat-label>
 
-<mat-form-field appearance="outline">
+      <input
+        matInput
+        formControlName="matricule">
 
-<mat-label>Matricule</mat-label>
+      <mat-error *ngIf="form.get('matricule')?.hasError('required')">
+        Le matricule est obligatoire
+      </mat-error>
 
-<input matInput formControlName="matricule">
+      <mat-error *ngIf="form.get('matricule')?.hasError('minlength')">
+        Minimum 3 caractères
+      </mat-error>
 
-</mat-form-field>
+    </mat-form-field>
 
 
+    <!-- Nom -->
+    <mat-form-field appearance="outline">
 
-<mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
 
-<mat-label>Nom</mat-label>
+      <input
+        matInput
+        formControlName="nom">
 
-<input matInput formControlName="nom">
+      <mat-error *ngIf="form.get('nom')?.hasError('required')">
+        Le nom est obligatoire
+      </mat-error>
 
-</mat-form-field>
+    </mat-form-field>
 
 
+    <!-- Prénom -->
+    <mat-form-field appearance="outline">
 
-<mat-form-field appearance="outline">
+      <mat-label>Prénom</mat-label>
 
-<mat-label>Prénom</mat-label>
+      <input
+        matInput
+        formControlName="prenom">
 
-<input matInput formControlName="prenom">
+      <mat-error *ngIf="form.get('prenom')?.hasError('required')">
+        Le prénom est obligatoire
+      </mat-error>
 
-</mat-form-field>
+    </mat-form-field>
 
 
+    <!-- Email -->
+    <mat-form-field appearance="outline">
 
-<mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
 
-<mat-label>Email</mat-label>
+      <input
+        matInput
+        formControlName="email">
 
-<input matInput formControlName="email">
+      <mat-error *ngIf="form.get('email')?.hasError('required')">
+        L'email est obligatoire
+      </mat-error>
 
-</mat-form-field>
+      <mat-error *ngIf="form.get('email')?.hasError('email')">
+        Email invalide
+      </mat-error>
 
+    </mat-form-field>
 
 
-<mat-form-field appearance="outline">
+    <!-- Poste -->
+    <mat-form-field appearance="outline">
 
-<mat-label>Poste</mat-label>
+      <mat-label>Poste</mat-label>
 
-<input matInput formControlName="poste">
+      <input
+        matInput
+        formControlName="poste">
 
-</mat-form-field>
+      <mat-error *ngIf="form.get('poste')?.hasError('required')">
+        Le poste est obligatoire
+      </mat-error>
 
+    </mat-form-field>
 
 
-<mat-form-field appearance="outline">
+    <!-- Département -->
+    <mat-form-field appearance="outline">
 
-<mat-label>Département</mat-label>
+      <mat-label>Département</mat-label>
 
-<input matInput formControlName="departement">
+      <input
+        matInput
+        formControlName="departement">
 
-</mat-form-field>
+      <mat-error *ngIf="form.get('departement')?.hasError('required')">
+        Le département est obligatoire
+      </mat-error>
 
+    </mat-form-field>
 
 
-<mat-form-field appearance="outline">
+    <!-- Salaire -->
+    <mat-form-field appearance="outline">
 
-<mat-label>Salaire brut</mat-label>
+      <mat-label>Salaire brut</mat-label>
 
-<input 
-matInput 
-type="number"
-formControlName="salaireBrut">
+      <input
+        matInput
+        type="number"
+        formControlName="salaireBrut">
 
-</mat-form-field>
+      <mat-error *ngIf="form.get('salaireBrut')?.hasError('required')">
+        Le salaire est obligatoire
+      </mat-error>
 
+      <mat-error *ngIf="form.get('salaireBrut')?.hasError('min')">
+        Le salaire doit être supérieur à 0
+      </mat-error>
 
+    </mat-form-field>
 
-<mat-form-field appearance="outline">
 
-<mat-label>Date d'embauche</mat-label>
+    <!-- Date -->
+    <mat-form-field appearance="outline">
 
-<input 
-matInput 
-type="date"
-formControlName="dateEmbauche">
+      <mat-label>Date d'embauche</mat-label>
 
-</mat-form-field>
+      <input
+        matInput
+        type="date"
+        formControlName="dateEmbauche">
 
+      <mat-error *ngIf="form.get('dateEmbauche')?.hasError('required')">
+        La date est obligatoire
+      </mat-error>
 
-</mat-dialog-content>
+    </mat-form-field>
 
+  </mat-dialog-content>
 
 
-<mat-dialog-actions>
+  <mat-dialog-actions>
 
+    <button
+      mat-button
+      type="button"
+      (click)="dialogRef.close()">
 
-<button 
-mat-button
-type="button"
-(click)="dialogRef.close()">
+      Annuler
 
-Annuler
+    </button>
 
-</button>
 
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [disabled]="form.invalid"
+      (click)="submit()">
 
+      {{ isEdit ? 'Modifier' : 'Ajouter' }}
 
-<button 
-mat-raised-button
-color="primary"
-type="button"
-(click)="submit()">
+    </button>
 
-{{isEdit ? 'Modifier':'Ajouter'}}
-
-</button>
-
-
-</mat-dialog-actions>
-
+  </mat-dialog-actions>
 
 </form>

@@ -16,6 +16,7 @@
 }
 
 
+
 mat-form-field {
 
   width: 220px;
@@ -24,9 +25,20 @@ mat-form-field {
 
 
 
+.search-field {
+
+  width: 350px;
+
+  margin-left: 20px;
+
+}
+
+
+
 button {
 
   height: 56px;
+
   margin-top: 4px;
 
 }
@@ -60,5 +72,49 @@ td {
 .mat-mdc-row:hover {
 
   background-color: rgba(0,0,0,0.04);
+
+}
+
+
+
+.actif {
+
+  color: #2e7d32;
+
+  font-weight: 600;
+
+}
+
+
+
+.inactif {
+
+  color: #d32f2f;
+
+  font-weight: 600;
+
+}
+
+
+
+.empty-state {
+
+  text-align: center;
+
+  padding: 30px;
+
+  color: #777;
+
+}
+
+
+
+.empty-state mat-icon {
+
+  font-size: 48px;
+
+  width: 48px;
+
+  height: 48px;
 
 }
