@@ -111,27 +111,38 @@ export class Employes {
 
   chargerEmployes(): void {
 
-  this.tousLesEmployes =
-    this.service.getEmployes();
+  this.service.getEmployes().subscribe({
 
-  this.dataSource.data =
-    [...this.tousLesEmployes];
+    next: (employes) => {
 
-  this.departements = [
-    ...new Set(
-      this.tousLesEmployes.map(
-        e => e.departement
-      )
-    )
-  ];
+      this.tousLesEmployes = employes;
 
-  setTimeout(() => {
+      this.dataSource.data = [...employes];
 
-    this.dataSource.sort =
-      this.sort;
+      this.departements = [
+        ...new Set(
+          employes.map(e => e.departement)
+        )
+      ];
 
-    this.dataSource.paginator =
-      this.paginator;
+      setTimeout(() => {
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+
+    },
+
+    error: (err) => {
+
+      console.error(err);
+
+      this.snackBar.open(
+        'Erreur lors du chargement des employés',
+        'OK',
+        { duration: 3000 }
+      );
+
+    }
 
   });
 
@@ -232,25 +243,43 @@ export class Employes {
 
   supprimer(id: number): void {
 
-    if (!confirm('Voulez-vous vraiment supprimer cet employé ?')) {
+  if (!confirm('Voulez-vous vraiment supprimer cet employé ?')) {
+    return;
+  }
 
-      return;
+  this.service.deleteEmploye(id).subscribe({
+
+    next: () => {
+
+      this.chargerEmployes();
+
+      this.snackBar.open(
+        'Employé supprimé avec succès',
+        'OK',
+        {
+          duration: 2000
+        }
+      );
+
+    },
+
+    error: (err) => {
+
+      console.error(err);
+
+      this.snackBar.open(
+        'Erreur lors de la suppression',
+        'OK',
+        {
+          duration: 3000
+        }
+      );
 
     }
 
-    this.service.deleteEmploye(id);
+  });
 
-    this.chargerEmployes();
-
-    this.snackBar.open(
-      'Employé supprimé avec succès',
-      'OK',
-      {
-        duration: 2000
-      }
-    );
-
-  }
+}
   exporterCSV(): void {
 
   const lignes = [];
