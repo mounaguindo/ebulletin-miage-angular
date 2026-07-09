@@ -12,6 +12,9 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { saveAs } from 'file-saver';
 
 import {
   MatTableDataSource,
@@ -64,7 +67,9 @@ import {
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatChipsModule,
+    MatSelectModule
   ],
   templateUrl: './employes.html'
 })
@@ -79,6 +84,10 @@ export class Employes {
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
+
+  departementSelectionne = '';
+
+  departements: string[] = [];
 
   dataSource = new MatTableDataSource<Employe>();
 
@@ -102,56 +111,76 @@ export class Employes {
 
   chargerEmployes(): void {
 
-    this.tousLesEmployes =
-      this.service.getEmployes();
+  this.tousLesEmployes =
+    this.service.getEmployes();
 
-    this.dataSource.data =
-      [...this.tousLesEmployes];
+  this.dataSource.data =
+    [...this.tousLesEmployes];
 
-    setTimeout(() => {
+  this.departements = [
+    ...new Set(
+      this.tousLesEmployes.map(
+        e => e.departement
+      )
+    )
+  ];
 
-      this.dataSource.sort =
-        this.sort;
+  setTimeout(() => {
 
-      this.dataSource.paginator =
-        this.paginator;
+    this.dataSource.sort =
+      this.sort;
 
-    });
+    this.dataSource.paginator =
+      this.paginator;
 
-  }
+  });
+
+}
 
   rechercher(): void {
 
-    const valeur =
-      this.recherche
-        .toLowerCase()
-        .trim();
+  const valeur =
+    this.recherche.toLowerCase().trim();
 
-    if (!valeur) {
+  let resultat =
+    [...this.tousLesEmployes];
 
-      this.dataSource.data =
-        [...this.tousLesEmployes];
+  if (valeur) {
 
-      return;
+    resultat = resultat.filter(e =>
 
-    }
+      e.nom.toLowerCase().includes(valeur) ||
 
-    this.dataSource.data =
-      this.tousLesEmployes.filter(e =>
+      e.prenom.toLowerCase().includes(valeur) ||
 
-        e.nom.toLowerCase().includes(valeur) ||
+      e.matricule.toLowerCase().includes(valeur) ||
 
-        e.prenom.toLowerCase().includes(valeur) ||
+      e.poste.toLowerCase().includes(valeur) ||
 
-        e.matricule.toLowerCase().includes(valeur) ||
+      e.departement.toLowerCase().includes(valeur)
 
-        e.poste.toLowerCase().includes(valeur) ||
-
-        e.departement.toLowerCase().includes(valeur)
-
-      );
+    );
 
   }
+
+  if (this.departementSelectionne) {
+
+    resultat = resultat.filter(
+
+      e => e.departement === this.departementSelectionne
+
+    );
+
+  }
+
+  this.dataSource.data = resultat;
+
+}
+    filtrerDepartement(): void {
+
+  this.rechercher();
+
+}
 
   ouvrirFormulaire(): void {
 
@@ -222,5 +251,51 @@ export class Employes {
     );
 
   }
+  exporterCSV(): void {
+
+  const lignes = [];
+
+  lignes.push([
+    'Matricule',
+    'Nom',
+    'Prénom',
+    'Email',
+    'Poste',
+    'Département',
+    'Salaire',
+    'Date embauche',
+    'Statut'
+  ]);
+
+  this.dataSource.data.forEach(e => {
+
+    lignes.push([
+      e.matricule,
+      e.nom,
+      e.prenom,
+      e.email,
+      e.poste,
+      e.departement,
+      e.salaireBrut,
+      e.dateEmbauche,
+      e.actif ? 'Actif' : 'Inactif'
+    ]);
+
+  });
+
+  const csv = lignes
+    .map(l => l.join(';'))
+    .join('\n');
+
+  const blob = new Blob(
+    [csv],
+    {
+      type: 'text/csv;charset=utf-8;'
+    }
+  );
+
+  saveAs(blob, 'employes.csv');
+
+}
 
 }

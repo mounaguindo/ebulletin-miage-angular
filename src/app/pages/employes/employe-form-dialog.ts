@@ -1,4 +1,5 @@
 import { Component, Inject, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import {
   ReactiveFormsModule,
@@ -47,15 +48,11 @@ from '../../models/employe';
   standalone:true,
 
   imports:[
-
+    CommonModule,
     ReactiveFormsModule,
-
     MatDialogModule,
-
     MatFormFieldModule,
-
     MatInputModule,
-
     MatButtonModule
 
   ],
