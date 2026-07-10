@@ -1,76 +1,81 @@
 <h2>Liste des bulletins</h2>
 
-<table>
+<button (click)="ajouter()">
+    Ajouter
+</button>
+
+<table border="1">
 
     <thead>
-
-    <tr>
-
-        <th>ID</th>
-
-        <th>Employé</th>
-
-        <th>Mois</th>
-
-        <th>Année</th>
-
-        <th>Salaire brut</th>
-
-        <th>Retenues</th>
-
-        <th>Net</th>
-
-        <th>Actions</th>
-
-    </tr>
-
+        <tr>
+            <th>ID</th>
+            <th>Employé</th>
+            <th>Mois</th>
+            <th>Année</th>
+            <th>Salaire brut</th>
+            <th>Retenues</th>
+            <th>Salaire net</th>
+            <th>Actions</th>
+        </tr>
     </thead>
 
     <tbody>
 
-    <tr *ngFor="let b of bulletins">
+        <tr *ngFor="let b of bulletins">
 
-        <td>{{b.id}}</td>
+            <td>
+                {{ b.id }}
+            </td>
 
-        <td>{{b.employe.nom}} {{b.employe.prenom}}</td>
+            <td>
+                {{ b.employe?.nom }} {{ b.employe?.prenom }}
+            </td>
 
-        <td>{{b.mois}}</td>
+            <td>
+                {{ b.mois }}
+            </td>
 
-        <td>{{b.annee}}</td>
+            <td>
+                {{ b.annee }}
+            </td>
 
-        <td>{{b.salaireBrut}}</td>
+            <td>
+                {{ b.salaireBrut }}
+            </td>
 
-        <td>{{b.retenues}}</td>
+            <td>
+                {{ b.retenues }}
+            </td>
 
-        <td>{{b.salaireNet}}</td>
+            <td>
+                {{ b.salaireNet }}
+            </td>
 
-        <td>
+            <td>
 
-            <button (click)="supprimer(b.id!)">
+                <button (click)="modifier(b)">
+                    Modifier
+                </button>
 
-                Supprimer
+                <button (click)="telecharger(b.id!)">
+                    PDF
+                </button>
 
-            </button>
+                <button (click)="supprimer(b.id!)">
+                    Supprimer
+                </button>
 
-        </td>
+            </td>
 
-        <td>
+        </tr>
 
-<button (click)="telecharger(b.id!)">
+        <tr *ngIf="bulletins.length === 0">
 
-PDF
+            <td colspan="8">
+                Aucun élément
+            </td>
 
-</button>
-
-<button (click)="supprimer(b.id!)">
-
-Supprimer
-
-</button>
-
-</td>
-
-    </tr>
+        </tr>
 
     </tbody>
 

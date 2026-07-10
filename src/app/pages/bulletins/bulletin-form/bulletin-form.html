@@ -1,0 +1,120 @@
+<h2 mat-dialog-title>
+Ajouter un bulletin
+</h2>
+
+
+<form [formGroup]="form">
+
+
+<mat-dialog-content>
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Employé ID</mat-label>
+
+<input 
+matInput
+type="number"
+formControlName="employeId">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Mois</mat-label>
+
+<input 
+matInput 
+formControlName="mois">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Année</mat-label>
+
+<input 
+matInput
+type="number"
+formControlName="annee">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Salaire brut</mat-label>
+
+<input 
+matInput
+type="number"
+formControlName="salaireBrut">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Retenues</mat-label>
+
+<input 
+matInput
+type="number"
+formControlName="retenues">
+
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+
+<mat-label>Salaire net</mat-label>
+
+<input 
+matInput
+type="number"
+formControlName="salaireNet">
+
+</mat-form-field>
+
+
+</mat-dialog-content>
+
+
+
+<mat-dialog-actions>
+
+
+<button 
+mat-button
+type="button"
+(click)="fermer()">
+
+Annuler
+
+</button>
+
+
+
+<button 
+mat-raised-button
+color="primary"
+type="button"
+(click)="enregistrer()">
+
+Ajouter
+
+</button>
+
+
+</mat-dialog-actions>
+
+
+</form>

@@ -1,3 +1,5 @@
+import { Employe } from './employe';
+
 export interface Bulletin {
 
   id?: number;
@@ -14,7 +16,6 @@ export interface Bulletin {
 
   salaireNet: number;
 
-  employe: any;
+  employe: Employe;
 
 }
-
