@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 import {
   FormBuilder,
   ReactiveFormsModule,
@@ -33,29 +34,53 @@ export class Login {
 
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   masquer = true;
 
   form = this.fb.group({
 
-    email: ['', [
-      Validators.required,
-      Validators.email
-    ]],
+  username: ['', Validators.required],
 
-    password: ['', Validators.required]
+  password: ['', Validators.required]
 
-  });
+});
 
   connexion() {
 
-    if (this.form.invalid) {
-      return;
+  if (this.form.invalid) {
+    return;
+  }
+
+  this.authService.login(this.form.getRawValue() as any).subscribe({
+
+    next: (response) => {
+
+      if (response.success) {
+
+        alert(response.message);
+
+        this.router.navigate(['/dashboard']);
+
+      } else {
+
+        alert(response.message);
+
+      }
+
+    },
+
+    error: (err) => {
+
+      console.error(err);
+
+      alert("Erreur de connexion avec le serveur.");
+
     }
 
-    alert("Connexion bientôt reliée à Spring Boot");
+  });
 
-  }
+}
 
   retour() {
 
