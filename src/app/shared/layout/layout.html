@@ -1,12 +1,19 @@
 <mat-sidenav-container class="sidenav-container">
 
   <!-- Menu latéral -->
-  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    opened
+    class="sidenav">
 
     <!-- Logo -->
     <div class="sidenav-header">
+
       <mat-icon>account_balance</mat-icon>
+
       <span>eBulletin</span>
+
     </div>
 
     <!-- Menu -->
@@ -68,12 +75,15 @@
 
       </button>
 
-      <!-- Profil utilisateur -->
+      <!-- Connexion -->
       <button
         mat-icon-button
-        aria-label="Profil utilisateur">
+        routerLink="/login"
+        routerLinkActive="active-link"
+        matTooltip="Se connecter"
+        aria-label="Connexion">
 
-        <mat-icon>account_circle</mat-icon>
+        <mat-icon>login</mat-icon>
 
       </button>
 

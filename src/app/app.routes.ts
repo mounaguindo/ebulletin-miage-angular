@@ -5,6 +5,7 @@ import { Employes } from './pages/employes/employes';
 import { Bulletins } from './pages/bulletins/bulletins';
 import { Login } from './pages/login/login';
 
+
 export const routes: Routes = [
   // Redirection vers le tableau de bord
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

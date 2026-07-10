@@ -7,22 +7,24 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
   imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
+  RouterOutlet,
+  RouterLink,
+  RouterLinkActive,
 
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatBadgeModule
-  ],
+  MatSidenavModule,
+  MatToolbarModule,
+  MatListModule,
+  MatIconModule,
+  MatButtonModule,
+  MatBadgeModule,
+  MatTooltipModule
+],
   templateUrl: './layout.html',
   styleUrl: './layout.scss'
 })
