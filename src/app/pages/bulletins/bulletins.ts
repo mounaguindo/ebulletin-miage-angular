@@ -1,100 +1,74 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-
-import { PageHeaderComponent }
-from '../../shared/page-header/page-header.component';
-
-
-import { MatTableModule }
-from '@angular/material/table';
-
-
-import { MatButtonModule }
-from '@angular/material/button';
-
-
-import { MatIconModule }
-from '@angular/material/icon';
-
-
+import { BulletinService } from '../../services/bulletin.service';
+import { Bulletin } from '../../models/bulletin';
 
 @Component({
-
   selector: 'app-bulletins',
-
   standalone: true,
-
-
-  imports: [
-
-    PageHeaderComponent,
-
-    MatTableModule,
-
-    MatButtonModule,
-
-    MatIconModule
-
-  ],
-
-
+  imports: [CommonModule],
   templateUrl: './bulletins.html',
-
-  styleUrl: './bulletins.scss'
-
+  styleUrls: ['./bulletins.scss']
 })
+export class Bulletins implements OnInit {
 
+  private service = inject(BulletinService);
 
-export class Bulletins {
+  bulletins: Bulletin[] = [];
 
+  ngOnInit(): void {
 
+    this.charger();
 
-  displayedColumns = [
+  }
 
-    'matricule',
+  charger() {
 
-    'employe',
+    this.service.getAll().subscribe({
 
-    'mois',
+      next: data => this.bulletins = data,
 
-    'salaire',
+      error: err => console.log(err)
 
-    'actions'
+    });
 
-  ];
+  }
 
+  supprimer(id:number){
 
+    if(confirm("Supprimer ce bulletin ?")){
 
+      this.service.delete(id).subscribe(()=>{
 
-  bulletins = [
+        this.charger();
 
-
-    {
-
-      matricule: 'EMP001',
-
-      employe: 'Moussa Traoré',
-
-      mois: 'Juin 2026',
-
-      salaire: 350000
-
-    },
-
-
-    {
-
-      matricule: 'EMP002',
-
-      employe: 'Awa Diarra',
-
-      mois: 'Juin 2026',
-
-      salaire: 300000
+      });
 
     }
 
+  }
 
-  ];
+  telecharger(id:number){
+
+    this.service.telechargerPdf(id)
+
+    .subscribe(blob=>{
+
+        const url=window.URL.createObjectURL(blob);
+
+        const a=document.createElement('a');
+
+        a.href=url;
+
+        a.download="bulletin.pdf";
+
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+
+    });
+
+}
 
 }

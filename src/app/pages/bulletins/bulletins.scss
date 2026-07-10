@@ -1,19 +1,31 @@
-table {
+table{
 
-  width: 100%;
+    width:100%;
 
-}
-
-
-th {
-
-  font-weight: bold;
+    border-collapse:collapse;
 
 }
 
+th,td{
 
-.mat-mdc-row:hover {
+    border:1px solid #ddd;
 
-  background-color: rgba(0,0,0,0.04);
+    padding:10px;
+
+}
+
+th{
+
+    background:#1976d2;
+
+    color:white;
+
+}
+
+button{
+
+    padding:6px 12px;
+
+    cursor:pointer;
 
 }
