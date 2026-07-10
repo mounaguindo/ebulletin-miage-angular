@@ -117,13 +117,61 @@ export class Bulletins implements OnInit {
 
 
 
-  modifier(bulletin: Bulletin) {
+  modifier(bulletin: Bulletin){
 
-    console.log("Modification du bulletin :", bulletin);
 
-    // On ajoutera ici l'ouverture du formulaire de modification
+const dialogRef = this.dialog.open(
+  BulletinForm,
+  {
+    width:'500px',
+    data: bulletin
+  }
+);
+
+
+
+dialogRef.afterClosed()
+.subscribe(result=>{
+
+
+  console.log("Modification reçue :", result);
+
+
+  if(result){
+
+
+    this.service.update(
+      bulletin.id!,
+      result
+    )
+    .subscribe({
+
+      next:()=>{
+
+        this.charger();
+
+      },
+
+
+      error:err=>{
+
+        console.log(
+          "Erreur modification :",
+          err
+        );
+
+      }
+
+    });
+
 
   }
+
+
+});
+
+
+}
 
 
 

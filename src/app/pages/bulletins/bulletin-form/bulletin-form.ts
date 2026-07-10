@@ -43,111 +43,156 @@ import { Bulletin } from '../../../models/bulletin';
 export class BulletinForm {
 
 
-form;
+  form;
+
+  isEdit = false;
 
 
-constructor(
+  constructor(
 
-private fb:FormBuilder,
+    private fb:FormBuilder,
 
-private dialogRef:MatDialogRef<BulletinForm>,
-
-@Inject(MAT_DIALOG_DATA)
-public data:Bulletin|null
+    private dialogRef:MatDialogRef<BulletinForm>,
 
 
-){
+    @Inject(MAT_DIALOG_DATA)
+    public data:Bulletin|null
 
 
-this.form=this.fb.group({
-
-mois:[
-data?.mois || '',
-Validators.required
-],
+  ){
 
 
-annee:[
-data?.annee || new Date().getFullYear(),
-Validators.required
-],
+    this.isEdit = data != null;
 
 
-salaireBrut:[
-data?.salaireBrut || 0,
-Validators.required
-],
+    this.form=this.fb.group({
 
 
-retenues:[
-data?.retenues || 0,
-Validators.required
-],
+      employeId:[
+
+        data?.employe?.id || '',
+
+        Validators.required
+
+      ],
 
 
-salaireNet:[
-data?.salaireNet || 0,
-Validators.required
-],
+      mois:[
+
+        data?.mois || '',
+
+        Validators.required
+
+      ],
 
 
-employeId:[
+      annee:[
 
-'',
+        data?.annee || new Date().getFullYear(),
 
-Validators.required
+        Validators.required
 
-]
-
-
-});
+      ],
 
 
-}
+      salaireBrut:[
+
+        data?.salaireBrut || 0,
+
+        Validators.required
+
+      ],
 
 
+      retenues:[
+
+        data?.retenues || 0,
+
+        Validators.required
+
+      ],
 
 
-enregistrer(){
+      salaireNet:[
+
+        data?.salaireNet || 0,
+
+        Validators.required
+
+      ]
 
 
-console.log("Formulaire :",this.form.value);
+    });
 
 
-
-if(this.form.valid){
-
-
-this.dialogRef.close({
-
-...this.form.value,
-
-employe:{
-id:this.form.value.employeId
-}
-
-});
-
-
-}
-
-else{
-
-console.log("Formulaire invalide");
-
-}
-
-
-}
+  }
 
 
 
 
-fermer(){
 
-this.dialogRef.close();
+  enregistrer(){
 
-}
+
+    console.log("Formulaire :",this.form.value);
+
+
+
+    if(this.form.valid){
+
+
+
+      const bulletin = {
+
+
+        ...this.form.value,
+
+
+        employe:{
+
+          id:this.form.value.employeId
+
+        }
+
+
+      };
+
+
+
+      console.log("Données envoyées :", bulletin);
+
+
+
+      this.dialogRef.close(bulletin);
+
+
+
+    }
+
+    else{
+
+
+      console.log("Formulaire invalide");
+
+      this.form.markAllAsTouched();
+
+
+    }
+
+
+  }
+
+
+
+
+
+  fermer(){
+
+
+    this.dialogRef.close();
+
+
+  }
 
 
 }

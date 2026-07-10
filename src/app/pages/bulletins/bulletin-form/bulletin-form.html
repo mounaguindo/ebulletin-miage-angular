@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-Ajouter un bulletin
+    {{ isEdit ? 'Modifier un bulletin' : 'Ajouter un bulletin' }}
 </h2>
 
 
@@ -9,109 +9,183 @@ Ajouter un bulletin
 <mat-dialog-content>
 
 
-<mat-form-field appearance="outline">
+    <!-- Employé -->
 
-<mat-label>Employé ID</mat-label>
+    <mat-form-field appearance="outline">
 
-<input 
-matInput
-type="number"
-formControlName="employeId">
+        <mat-label>Employé ID</mat-label>
 
-</mat-form-field>
+        <input
+        matInput
+        type="number"
+        formControlName="employeId">
 
 
+        <mat-error *ngIf="form.get('employeId')?.hasError('required')">
 
-<mat-form-field appearance="outline">
+            L'identifiant de l'employé est obligatoire
 
-<mat-label>Mois</mat-label>
+        </mat-error>
 
-<input 
-matInput 
-formControlName="mois">
 
-</mat-form-field>
+    </mat-form-field>
 
 
 
-<mat-form-field appearance="outline">
 
-<mat-label>Année</mat-label>
+    <!-- Mois -->
 
-<input 
-matInput
-type="number"
-formControlName="annee">
+    <mat-form-field appearance="outline">
 
-</mat-form-field>
+        <mat-label>Mois</mat-label>
+
+        <input
+        matInput
+        formControlName="mois">
 
 
+        <mat-error *ngIf="form.get('mois')?.hasError('required')">
 
-<mat-form-field appearance="outline">
+            Le mois est obligatoire
 
-<mat-label>Salaire brut</mat-label>
+        </mat-error>
 
-<input 
-matInput
-type="number"
-formControlName="salaireBrut">
 
-</mat-form-field>
+    </mat-form-field>
 
 
 
-<mat-form-field appearance="outline">
 
-<mat-label>Retenues</mat-label>
+    <!-- Année -->
 
-<input 
-matInput
-type="number"
-formControlName="retenues">
+    <mat-form-field appearance="outline">
 
-</mat-form-field>
+        <mat-label>Année</mat-label>
+
+        <input
+        matInput
+        type="number"
+        formControlName="annee">
+
+
+        <mat-error *ngIf="form.get('annee')?.hasError('required')">
+
+            L'année est obligatoire
+
+        </mat-error>
+
+
+    </mat-form-field>
 
 
 
-<mat-form-field appearance="outline">
 
-<mat-label>Salaire net</mat-label>
 
-<input 
-matInput
-type="number"
-formControlName="salaireNet">
+    <!-- Salaire brut -->
 
-</mat-form-field>
+    <mat-form-field appearance="outline">
+
+        <mat-label>Salaire brut</mat-label>
+
+        <input
+        matInput
+        type="number"
+        formControlName="salaireBrut">
+
+
+        <mat-error *ngIf="form.get('salaireBrut')?.hasError('required')">
+
+            Le salaire brut est obligatoire
+
+        </mat-error>
+
+
+    </mat-form-field>
+
+
+
+
+
+    <!-- Retenues -->
+
+    <mat-form-field appearance="outline">
+
+        <mat-label>Retenues</mat-label>
+
+        <input
+        matInput
+        type="number"
+        formControlName="retenues">
+
+
+        <mat-error *ngIf="form.get('retenues')?.hasError('required')">
+
+            Les retenues sont obligatoires
+
+        </mat-error>
+
+
+    </mat-form-field>
+
+
+
+
+
+    <!-- Salaire net -->
+
+    <mat-form-field appearance="outline">
+
+        <mat-label>Salaire net</mat-label>
+
+        <input
+        matInput
+        type="number"
+        formControlName="salaireNet">
+
+
+        <mat-error *ngIf="form.get('salaireNet')?.hasError('required')">
+
+            Le salaire net est obligatoire
+
+        </mat-error>
+
+
+    </mat-form-field>
+
 
 
 </mat-dialog-content>
 
 
 
-<mat-dialog-actions>
 
 
-<button 
-mat-button
-type="button"
-(click)="fermer()">
-
-Annuler
-
-</button>
+<mat-dialog-actions align="end">
 
 
+    <button
+    mat-button
+    type="button"
+    (click)="fermer()">
 
-<button 
-mat-raised-button
-color="primary"
-type="button"
-(click)="enregistrer()">
+        Annuler
 
-Ajouter
+    </button>
 
-</button>
+
+
+
+    <button
+    mat-raised-button
+    color="primary"
+    type="button"
+    (click)="enregistrer()">
+
+
+        {{ isEdit ? 'Modifier' : 'Ajouter' }}
+
+
+    </button>
 
 
 </mat-dialog-actions>
